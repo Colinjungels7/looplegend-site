@@ -370,7 +370,61 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   .hero { padding: 8rem 1.5rem 6rem; }
 }
 
-/* ═══ SUBTLE ANIMATIONS ═══ */
+/* ═══ CTA / CONTACT FORM ═══ */
+.form-wrap {
+  max-width: 600px;
+  margin: 2rem auto 0;
+}
+.demo-form input, .demo-form textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+.demo-form input::placeholder, .demo-form textarea::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+.demo-form input:focus, .demo-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.15);
+}
+.demo-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.demo-form textarea {
+  margin-bottom: 1rem;
+  resize: vertical;
+}
+.demo-form button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--gold);
+  color: var(--green-900);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.demo-form button:hover {
+  background: #d4a843;
+  transform: translateY(-1px);
+}
+@media (max-width: 600px) {
+  .demo-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ═══ SCREENSHOTS ═══ */
 .screenshots { background: var(--white); }
@@ -430,7 +484,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
     <a href="#features">Features</a>
     <a href="#about">About</a>
     <a href="https://looplegendapp.com" class="btn-login">Log In</a>
-    <a href="mailto:looplegendco@gmail.com?subject=LoopLegend Demo Request" class="btn-demo">Request Demo</a>
+    <a href="#demo" class="btn-demo">Request Demo</a>
   </div>
 </nav>
 
@@ -441,7 +495,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
     <h1>The right caddie on the right loop, <em>every time</em></h1>
     <p class="hero-sub">LoopLegend replaces manual caddie assignment with an intelligent draft engine that matches caddies to loops based on merit, availability, and member preferences.</p>
     <div class="hero-cta">
-      <a href="mailto:looplegendco@gmail.com?subject=LoopLegend Demo Request" class="cta-primary">Request a Demo</a>
+      <a href="#demo" class="cta-primary">Request a Demo</a>
       <a href="#how" class="cta-secondary">See How It Works</a>
     </div>
   </div>
@@ -646,13 +700,25 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="demo">
   <div class="container reveal">
     <h2>Ready to automate your caddie program?</h2>
-    <p>See how LoopLegend can save your caddie master hours every week while delivering better service to your members.</p>
-    <a href="mailto:looplegendco@gmail.com?subject=LoopLegend Demo Request">Request a Demo</a>
-    <div class="cta-email">or email us at <a href="mailto:looplegendco@gmail.com">looplegendco@gmail.com</a></div>
+    <p>Leave your info and we'll set up a personalized demo for your club.</p>
+    <div class="form-wrap">
+      <form action="https://formspree.io/f/mykdjawv" method="POST" class="demo-form">
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+        <div class="form-row">
+          <input type="text" name="club" placeholder="Club Name">
+          <input type="tel" name="phone" placeholder="Phone (optional)">
+        </div>
+        <textarea name="message" placeholder="Anything you'd like us to know? (optional)" rows="3"></textarea>
+        <button type="submit">Request a Demo</button>
+      </form>
+    </div>
   </div>
 </section>
 
