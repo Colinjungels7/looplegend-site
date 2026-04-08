@@ -379,21 +379,29 @@ footer a:hover { color: rgba(248,245,239,0.6); }
 
 /* ═══ MOBILE ═══ */
 @media (max-width: 768px) {
-  nav { padding: 0.75rem 1rem; }
+  nav { padding: 0.75rem 1rem; background: rgba(12, 31, 19, 0.97); }
   nav.scrolled { padding: 0.5rem 1rem; }
   .nav-logo { font-size: 1.1rem; }
   .hamburger { display: block; }
   .nav-right {
-    display: none; flex-direction: column;
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(12, 31, 19, 0.98);
-    backdrop-filter: blur(12px);
+    width: 100vw; height: 100vh;
+    background: var(--green-950);
+    display: none; flex-direction: column;
     justify-content: center; align-items: center;
-    gap: 1.5rem; z-index: 150;
+    gap: 2rem; z-index: 150;
+    overflow: hidden;
   }
   .nav-right.open { display: flex; }
-  .nav-right a { display: block !important; font-size: 1.2rem !important; color: var(--cream) !important; }
-  .btn-login, .btn-demo { font-size: 0.9rem !important; padding: 0.6rem 1.5rem !important; }
+  body.menu-open { overflow: hidden; }
+  .nav-right a { display: block !important; font-size: 1.3rem !important; color: var(--cream) !important; opacity: 0.85; }
+  .nav-right a:hover { opacity: 1; }
+  .nav-right .btn-login {
+    border-color: rgba(248,245,239,0.5) !important;
+    font-size: 1rem !important; padding: 0.7rem 2rem !important;
+    margin-top: 0.5rem;
+  }
+  .nav-right .btn-demo { font-size: 1rem !important; padding: 0.7rem 2rem !important; }
   section { padding: 4rem 1.25rem; }
   .problem-grid { grid-template-columns: 1fr; }
   .feature-grid { grid-template-columns: 1fr; }
@@ -401,6 +409,9 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   .step { gap: 1.5rem; }
   .step-num { font-size: 2.2rem; width: 40px; }
   .hero { padding: 8rem 1.5rem 6rem; }
+  .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
+  .footer-links a { font-size: 0.85rem; }
+  .footer-links .footer-dot { font-size: 0.85rem; }
 }
 
 /* ═══ CTA / CONTACT FORM ═══ */
@@ -764,11 +775,11 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   </div>
   <div class="footer-links" style="margin:1rem 0;">
     <a href="#about">About</a>
-    <span style="opacity:0.5;margin:0 0.75rem;">·</span>
+    <span class="footer-dot" style="opacity:0.5;margin:0 0.75rem;">·</span>
     <a href="#how">How It Works</a>
-    <span style="opacity:0.5;margin:0 0.75rem;">·</span>
+    <span class="footer-dot" style="opacity:0.5;margin:0 0.75rem;">·</span>
     <a href="#features">Features</a>
-    <span style="opacity:0.5;margin:0 0.75rem;">·</span>
+    <span class="footer-dot" style="opacity:0.5;margin:0 0.75rem;">·</span>
     <a href="#demo">Request a Demo</a>
   </div>
   <p style="margin-top:0.5rem;"><a href="mailto:looplegendco@gmail.com" class="footer-links">looplegendco@gmail.com</a></p>
@@ -800,11 +811,13 @@ const navRight = document.getElementById('nav-right');
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('active');
   navRight.classList.toggle('open');
+  document.body.classList.toggle('menu-open');
 });
 navRight.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     hamburger.classList.remove('active');
     navRight.classList.remove('open');
+    document.body.classList.remove('menu-open');
   });
 });
 
