@@ -9,7 +9,11 @@
 <meta property="og:description" content="Smart caddie scheduling, assignment, and communication for golf clubs.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://looplegend.com">
-<meta property="og:image" content="https://looplegend.com/screenshot-admin.png">
+<meta property="og:image" content="https://looplegend.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://looplegend.com/og-image.png">
 <meta property="og:site_name" content="LoopLegend">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
@@ -189,8 +193,8 @@ section { padding: 6rem 2rem; }
 /* ═══ PROBLEM ═══ */
 .problem { background: var(--white); }
 .problem-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 2rem; margin-top: 3.5rem;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 3.5rem;
 }
 .problem-card {
   padding: 2.25rem;
@@ -276,6 +280,56 @@ section { padding: 6rem 2rem; }
   font-size: 0.9rem; color: rgba(248,245,239,0.5);
   line-height: 1.6;
 }
+
+/* ═══ FEATURE-MORE ═══ */
+.feature-more {
+  margin-top: 1.5rem;
+  background: rgba(248,245,239,0.04);
+  border: 1px solid rgba(248,245,239,0.08);
+  border-radius: 10px;
+  padding: 2rem 2.25rem;
+  display: grid; grid-template-columns: 1fr 1.6fr;
+  gap: 2rem; align-items: start;
+}
+.feature-more-head h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 500;
+  color: var(--cream); margin-bottom: 0.4rem;
+}
+.feature-more-head p { font-size: 0.85rem; color: rgba(248,245,239,0.5); line-height: 1.5; }
+.feature-more-list {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem 1.5rem;
+}
+.feature-more-list li {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.9rem; color: rgba(248,245,239,0.85); font-weight: 500;
+}
+.feature-more-list .check { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; }
+@media (max-width: 768px) {
+  .feature-more { grid-template-columns: 1fr; padding: 1.5rem; }
+  .feature-more-list { grid-template-columns: 1fr; }
+}
+
+/* ═══ FOUNDER PULL QUOTE ═══ */
+.founder-pull {
+  max-width: 880px; margin: 2.5rem auto 3rem; text-align: left;
+  padding: 2rem 0 2.25rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.founder-pull blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  line-height: 1.25; font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--text); margin: 0 0 1.25rem;
+}
+.founder-pull blockquote em { font-style: italic; color: var(--gold); }
+.founder-byline { display: flex; align-items: center; gap: 1rem; }
+.founder-rule { width: 32px; height: 1px; background: var(--gold); display: inline-block; }
+.founder-pull .founder-name { font-family: 'Source Sans 3', sans-serif; font-weight: 700; font-size: 0.95rem; }
+.founder-pull .founder-role { font-size: 0.75rem; color: var(--text-light); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.15rem; }
 
 /* ═══ ABOUT ═══ */
 .about { background: var(--white); }
@@ -540,13 +594,12 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   <div class="hero-content">
     <div class="hero-eyebrow">Caddie Management, Automated</div>
     <h1>The right caddie on the right loop, <em>every time</em></h1>
-    <p class="hero-sub">LoopLegend replaces manual caddie assignment with an automated draft engine that matches caddies to loops based on merit, availability, and member preferences.</p>
+    <p class="hero-sub">An automated draft engine that matches caddies to loops based on merit, availability, and member preferences — built for golf clubs.</p>
     <div class="hero-cta">
       <a href="#demo" class="cta-primary">Request a Demo</a>
       <a href="#problem" class="cta-secondary">Learn More</a>
     </div>
   </div>
-
 </section>
 
 <!-- PROBLEM -->
@@ -559,22 +612,17 @@ footer a:hover { color: rgba(248,245,239,0.6); }
     </div>
     <div class="problem-grid">
       <div class="problem-card reveal">
-        <div class="problem-icon">⏱</div>
+        <div class="problem-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
         <h3>Hours Wasted on Scheduling</h3>
         <p>The caddie master spends hours every week juggling availability, texts, and last-minute changes instead of focusing on the member experience.</p>
       </div>
       <div class="problem-card reveal">
-        <div class="problem-icon">📱</div>
+        <div class="problem-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
         <h3>Communication Chaos</h3>
         <p>A caddie cancels two hours before a tee time. Now someone's scrambling to find a replacement through a chain of phone calls and texts.</p>
       </div>
       <div class="problem-card reveal">
-        <div class="problem-icon">🔄</div>
-        <h3>Poor Utilization</h3>
-        <p>Caddies sit idle while loops go unfilled. The wrong caddie ends up with the wrong group, and members notice.</p>
-      </div>
-      <div class="problem-card reveal">
-        <div class="problem-icon">⚖️</div>
+        <div class="problem-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><path d="M12 3v18M5 8h14M5 8l-2 6a4 4 0 0 0 8 0L9 8M19 8l-2 6a4 4 0 0 0 8 0l-2-6"/></svg></div>
         <h3>Inconsistent Assignments</h3>
         <p>Without a system, a first-year caddie can end up on the same loop as a veteran who's been there for years. Experience and effort don't always get rewarded.</p>
       </div>
@@ -645,19 +693,19 @@ footer a:hover { color: rgba(248,245,239,0.6); }
     </div>
     <div class="screenshot-panel active" id="panel-admin">
       <div class="screenshot-frame reveal">
-        <img src="screenshot-admin.png" alt="LoopLegend admin tee sheet view">
+        <img src="assets/screenshot-admin.png" alt="LoopLegend admin tee sheet view">
       </div>
       <p class="screenshot-caption">The caddie master sees the full tee sheet with every assignment, guest tag, and caddie at a glance.</p>
     </div>
     <div class="screenshot-panel" id="panel-caddie">
       <div class="screenshot-frame reveal">
-        <img src="screenshot-caddie.png" alt="LoopLegend caddie dashboard">
+        <img src="assets/screenshot-caddie.png" alt="LoopLegend caddie dashboard">
       </div>
       <p class="screenshot-caption">Caddies see their pending and confirmed loops with full group details. Accept or decline with one tap.</p>
     </div>
     <div class="screenshot-panel" id="panel-member">
       <div class="screenshot-frame reveal">
-        <img src="screenshot-member.png" alt="LoopLegend member view">
+        <img src="assets/screenshot-member.png" alt="LoopLegend member view">
       </div>
       <p class="screenshot-caption">Members see their upcoming tee times, assigned caddie, and can request or replace caddies directly.</p>
     </div>
@@ -674,65 +722,50 @@ footer a:hover { color: rgba(248,245,239,0.6); }
     </div>
     <div class="feature-grid">
       <div class="feature-card reveal">
-        <div class="feature-icon">🏆</div>
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><path d="M6 9V5h12v4a6 6 0 0 1-12 0z"/><path d="M6 5H3v3a3 3 0 0 0 3 3M18 5h3v3a3 3 0 0 1-3 3M9 19h6M12 15v4"/></svg></div>
         <h3>Merit-Based Draft Engine</h3>
         <p>Every morning, the system drafts caddies to loops based on ratings, acceptance rate, experience, and commitment. The caddies who earn it get the best loops.</p>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">📅</div>
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
         <h3>Self-Service Availability</h3>
         <p>Caddies manage their own schedules from their phone. Set exact available hours — not just AM or PM — so the system knows precisely when each caddie can work. Nobody has to call around or send group texts.</p>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">🚨</div>
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
         <h3>Emergency Backfill</h3>
         <p>When someone cancels within 6 hours, every available caddie gets an instant broadcast. First to accept gets the loop.</p>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">⭐</div>
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></div>
         <h3>Member Caddie Requests</h3>
         <p>Members can request their favorite caddies directly through the system. They can also rate their experience after a round, which feeds into future assignments. The caddies members love keep coming back to them.</p>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">📊</div>
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
         <h3>Admin Dashboard</h3>
         <p>The caddie master sees the full tee sheet, every assignment, caddie status, and pending requests in one view. Add, remove, or reassign any caddie with a click.</p>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon">🔔</div>
-        <h3>Instant Notifications</h3>
-        <p>Caddies and members get instant push notifications for assignments, confirmations, and schedule changes. No app? SMS has them covered automatically.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🔗</div>
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold);"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></div>
         <h3>Tee Sheet Integration</h3>
         <p>Connects directly to your existing tee sheet software. Tee times, members, guests, walking or riding — it all syncs automatically. You don't have to enter anything twice.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">⏳</div>
-        <h3>Tee Time Delay Alerts</h3>
-        <p>Weather delay or course backup? The caddie master pushes tee times back and every affected caddie and member gets notified with their updated time.</p>
+    </div>
+
+    <div class="feature-more reveal">
+      <div class="feature-more-head">
+        <h3>Plus everything else.</h3>
+        <p>Smaller features that round out the program.</p>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">📈</div>
-        <h3>Performance Tracking</h3>
-        <p>Track caddie ratings, loop counts, acceptance rates, and member feedback. Identify your top performers and see who's falling behind, all updated as it happens.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🏅</div>
-        <h3>Caddie Leaderboard</h3>
-        <p>Every completed loop earns points based on member ratings. Caddies see their ranking in real time, so they know exactly where they stand and what it takes to move up.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">💰</div>
-        <h3>Caddie Rate Card</h3>
-        <p>Set minimum suggested fees by tier and rating. Members see rates on their phone. Dispatchers can print and post at the club. No more hand-written signs.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">⛳</div>
-        <h3>Multi-Course Support</h3>
-        <p>Two courses, one caddie roster. Caddies are assigned from a shared pool across both courses, and the system makes sure nobody gets double-booked.</p>
-      </div>
+      <ul class="feature-more-list">
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Push &amp; SMS notifications</li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Tee time delay alerts</li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Performance tracking</li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Caddie leaderboard</li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Caddie rate card</li>
+        <li><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Multi-course support</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -744,15 +777,20 @@ footer a:hover { color: rgba(248,245,239,0.6); }
       <div class="section-label">Our Story</div>
       <h2 class="section-heading">Built from the course, not a boardroom</h2>
     </div>
-    <div class="about-text reveal" style="max-width:800px;margin:0 auto;">
+    <div class="founder-pull reveal">
+      <blockquote>“Stop punishing good caddies <em>with bad scheduling.</em>”</blockquote>
+      <div class="founder-byline">
+        <span class="founder-rule"></span>
+        <div>
+          <div class="founder-name">Colin Jungels</div>
+          <div class="founder-role">Founder · Caddie</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal" style="max-width:760px;margin:0 auto;">
       <p>LoopLegend started with a simple observation: caddie programs at golf clubs run on manual effort, and it doesn't have to be that way.</p>
       <p>Colin spent years caddying at a golf club, watching the daily chaos of scheduling and last-minute changes that every caddie master faces. The best caddies didn't always get rewarded. Members didn't always get matched well. And when someone cancelled two hours out, it was pure chaos.</p>
       <p>After years of thinking about the problem from inside the caddie program, he built LoopLegend to bring fairness and transparency to the caddie experience without changing what makes it special.</p>
-      <p>The goal was pretty simple: stop punishing good caddies with bad scheduling.</p>
-      <div style="text-align:center;margin-top:2rem;">
-        <div class="founder-name">Colin Jungels</div>
-        <div class="founder-role">Founder</div>
-      </div>
     </div>
   </div>
 </section>
