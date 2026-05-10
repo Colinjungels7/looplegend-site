@@ -831,7 +831,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
         </div>
         <div class="form-row">
           <input type="text" name="club" placeholder="Club Name">
-          <input type="tel" name="phone" placeholder="Phone (optional)">
+          <input type="tel" name="phone" placeholder="Phone (optional, 10 digits)" inputmode="numeric">
         </div>
         <textarea name="message" placeholder="Anything you'd like us to know? (optional)" rows="3"></textarea>
         <button type="submit">Request a Demo</button>
@@ -926,6 +926,13 @@ function showToast(msg, isError) {
 if (demoForm) {
   demoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const phoneInput = demoForm.querySelector('input[name="phone"]');
+    const phoneDigits = phoneInput.value.replace(/\D/g, '');
+    if (phoneInput.value.trim() && phoneDigits.length !== 10) {
+      showToast('Please enter a 10-digit phone number, or leave it blank.', true);
+      phoneInput.focus();
+      return;
+    }
     const btn = demoForm.querySelector('button[type="submit"]');
     const originalText = btn.textContent;
     btn.disabled = true;
