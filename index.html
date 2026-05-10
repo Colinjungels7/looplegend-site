@@ -22,6 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/css/intlTelInput.css">
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/utils.js">
 <style>
 :root {
   --green-950: #0c1f13;
@@ -962,33 +963,9 @@ if (demoForm) {
     initialCountry: 'us',
     separateDialCode: true,
     formatAsYouType: true,
+    strictMode: true,
     preferredCountries: ['us', 'ca', 'gb', 'mx', 'au'],
     utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/utils.js'
-  });
-  // Strip non-phone characters and cap at the selected country's max
-  // digit length (e.g. US=10, UK=11). Falls back to 15 (E.164 max)
-  // until utils.js loads and per-country maxes are available.
-  let lastValidPhone = '';
-  const countDigits = (s) => (s.match(/\d/g) || []).length;
-  const getMaxDigits = () => {
-    const utils = window.intlTelInputUtils;
-    const country = phoneIti.getSelectedCountryData() && phoneIti.getSelectedCountryData().iso2;
-    if (utils && country && typeof utils.getMaxCoreNumberLength === 'function') {
-      return utils.getMaxCoreNumberLength(country) || 15;
-    }
-    return 15;
-  };
-  phoneInput.addEventListener('input', () => {
-    const stripped = phoneInput.value.replace(/[^\d\s\-()+]/g, '');
-    if (stripped !== phoneInput.value) phoneInput.value = stripped;
-    if (countDigits(phoneInput.value) > getMaxDigits()) {
-      phoneInput.value = lastValidPhone;
-      return;
-    }
-    lastValidPhone = phoneInput.value;
-  });
-  phoneInput.addEventListener('countrychange', () => {
-    lastValidPhone = phoneInput.value;
   });
   demoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
