@@ -545,6 +545,16 @@ footer a:hover { color: rgba(248,245,239,0.6); }
 .iti__country.iti__highlight { background: rgba(184,151,58,0.18); }
 .iti__arrow { border-top-color: rgba(248,245,239,0.6); }
 .iti__arrow--up { border-bottom-color: rgba(248,245,239,0.6); }
+/* Country-search input inside the dropdown — override the dark-form input style */
+.demo-form .iti__search-input {
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 6px;
+  padding: 0.55rem 0.75rem;
+  width: 100%;
+}
+.demo-form .iti__search-input::placeholder { color: var(--text-light); }
 
 /* ═══ TOAST ═══ */
 .toast {
