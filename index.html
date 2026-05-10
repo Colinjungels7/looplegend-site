@@ -965,22 +965,30 @@ if (demoForm) {
     preferredCountries: ['us', 'ca', 'gb', 'mx', 'au'],
     utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/utils.js'
   });
-  // Strip non-phone characters and cap at 15 digits (E.164 max).
-  // Runs after iti's own AsYouType formatter so spaces/dashes/parens stay intact.
-  phoneInput.addEventListener('input', () => {
-    const original = phoneInput.value;
-    let digitCount = 0;
-    let cleaned = '';
-    for (const ch of original) {
-      if (/\d/.test(ch)) {
-        if (digitCount >= 15) continue;
-        digitCount++;
-        cleaned += ch;
-      } else if (/[\s\-()+]/.test(ch)) {
-        cleaned += ch;
-      }
+  // Strip non-phone characters and cap at the selected country's max
+  // digit length (e.g. US=10, UK=11). Falls back to 15 (E.164 max)
+  // until utils.js loads and per-country maxes are available.
+  let lastValidPhone = '';
+  const countDigits = (s) => (s.match(/\d/g) || []).length;
+  const getMaxDigits = () => {
+    const utils = window.intlTelInputUtils;
+    const country = phoneIti.getSelectedCountryData() && phoneIti.getSelectedCountryData().iso2;
+    if (utils && country && typeof utils.getMaxCoreNumberLength === 'function') {
+      return utils.getMaxCoreNumberLength(country) || 15;
     }
-    if (cleaned !== original) phoneInput.value = cleaned;
+    return 15;
+  };
+  phoneInput.addEventListener('input', () => {
+    const stripped = phoneInput.value.replace(/[^\d\s\-()+]/g, '');
+    if (stripped !== phoneInput.value) phoneInput.value = stripped;
+    if (countDigits(phoneInput.value) > getMaxDigits()) {
+      phoneInput.value = lastValidPhone;
+      return;
+    }
+    lastValidPhone = phoneInput.value;
+  });
+  phoneInput.addEventListener('countrychange', () => {
+    lastValidPhone = phoneInput.value;
   });
   demoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
