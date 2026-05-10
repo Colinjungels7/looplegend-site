@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/css/intlTelInput.css">
 <style>
 :root {
   --green-950: #0c1f13;
@@ -524,6 +525,27 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   }
 }
 
+/* ═══ INTL TEL INPUT ═══ */
+.iti { width: 100%; display: block; }
+.iti__tel-input { width: 100%; }
+.iti--separate-dial-code .iti__selected-flag {
+  background: rgba(0,0,0,0.18);
+  border-radius: 8px 0 0 8px;
+  border-right: 1px solid rgba(248,245,239,0.12);
+}
+.iti--separate-dial-code .iti__selected-dial-code {
+  color: var(--cream);
+}
+.iti__country-list {
+  color: var(--text);
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  max-height: 260px;
+}
+.iti__country.iti__highlight { background: rgba(184,151,58,0.18); }
+.iti__arrow { border-top-color: rgba(248,245,239,0.6); }
+.iti__arrow--up { border-bottom-color: rgba(248,245,239,0.6); }
+
 /* ═══ TOAST ═══ */
 .toast {
   position: fixed; left: 50%; bottom: 2rem;
@@ -831,7 +853,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
         </div>
         <div class="form-row">
           <input type="text" name="club" placeholder="Club Name" required>
-          <input type="tel" name="phone" placeholder="Phone (10 digits, optional)" inputmode="numeric" maxlength="10" pattern="[0-9]{10}">
+          <input type="tel" name="phone" id="phone-input" placeholder="Phone (optional)">
         </div>
         <textarea name="message" placeholder="Anything you'd like us to know? (optional)" rows="3"></textarea>
         <button type="submit">Request a Demo</button>
@@ -858,7 +880,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
     <span class="footer-dot" style="opacity:0.5;margin:0 0.75rem;">·</span>
     <a href="#demo">Request a Demo</a>
   </div>
-  <p style="margin-top:0.5rem;"><a href="mailto:looplegendco@gmail.com" class="footer-links">looplegendco@gmail.com</a></p>
+  <p style="margin-top:0.5rem;"><a href="mailto:demo@looplegendapp.com" class="footer-links">demo@looplegendapp.com</a></p>
   <p style="margin-top:1.25rem;opacity:0.6;font-size:0.85rem;">© 2026 LoopLegend. All rights reserved.</p>
 </footer>
 
@@ -869,6 +891,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
 </div>
 
 <!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/intlTelInput.min.js"></script>
 <script>
 // Nav scroll effect
 const nav = document.getElementById('nav');
@@ -924,16 +947,18 @@ function showToast(msg, isError) {
   toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
 }
 if (demoForm) {
-  const phoneInput = demoForm.querySelector('input[name="phone"]');
-  // Strip non-digits as the user types/pastes; cap at 10 chars
-  phoneInput.addEventListener('input', () => {
-    const cleaned = phoneInput.value.replace(/\D/g, '').slice(0, 10);
-    if (cleaned !== phoneInput.value) phoneInput.value = cleaned;
+  const phoneInput = document.getElementById('phone-input');
+  const phoneIti = window.intlTelInput(phoneInput, {
+    initialCountry: 'us',
+    separateDialCode: true,
+    formatAsYouType: true,
+    preferredCountries: ['us', 'ca', 'gb', 'mx', 'au'],
+    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/utils.js'
   });
   demoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (phoneInput.value && phoneInput.value.length !== 10) {
-      showToast('Please enter a 10-digit phone number, or leave it blank.', true);
+    if (phoneInput.value.trim() && !phoneIti.isValidNumber()) {
+      showToast('Please enter a valid phone number, or leave it blank.', true);
       phoneInput.focus();
       return;
     }
@@ -942,9 +967,13 @@ if (demoForm) {
     btn.disabled = true;
     btn.textContent = 'Sending…';
     try {
+      const fd = new FormData(demoForm);
+      if (phoneInput.value.trim()) {
+        fd.set('phone', phoneIti.getNumber()); // E.164 format e.g. +17856873258
+      }
       const res = await fetch(demoForm.action, {
         method: 'POST',
-        body: new FormData(demoForm),
+        body: fd,
         headers: { 'Accept': 'application/json' }
       });
       if (res.ok) {
