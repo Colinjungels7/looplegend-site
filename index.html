@@ -831,7 +831,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
         </div>
         <div class="form-row">
           <input type="text" name="club" placeholder="Club Name" required>
-          <input type="tel" name="phone" placeholder="Phone (optional, 10 digits)" inputmode="numeric">
+          <input type="tel" name="phone" placeholder="Phone (10 digits, optional)" inputmode="numeric" maxlength="10" pattern="[0-9]{10}">
         </div>
         <textarea name="message" placeholder="Anything you'd like us to know? (optional)" rows="3"></textarea>
         <button type="submit">Request a Demo</button>
@@ -924,11 +924,15 @@ function showToast(msg, isError) {
   toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
 }
 if (demoForm) {
+  const phoneInput = demoForm.querySelector('input[name="phone"]');
+  // Strip non-digits as the user types/pastes; cap at 10 chars
+  phoneInput.addEventListener('input', () => {
+    const cleaned = phoneInput.value.replace(/\D/g, '').slice(0, 10);
+    if (cleaned !== phoneInput.value) phoneInput.value = cleaned;
+  });
   demoForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const phoneInput = demoForm.querySelector('input[name="phone"]');
-    const phoneDigits = phoneInput.value.replace(/\D/g, '');
-    if (phoneInput.value.trim() && phoneDigits.length !== 10) {
+    if (phoneInput.value && phoneInput.value.length !== 10) {
       showToast('Please enter a 10-digit phone number, or leave it blank.', true);
       phoneInput.focus();
       return;
