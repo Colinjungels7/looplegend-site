@@ -524,6 +524,29 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   }
 }
 
+/* ═══ TOAST ═══ */
+.toast {
+  position: fixed; left: 50%; bottom: 2rem;
+  transform: translate(-50%, 150%);
+  display: flex; align-items: center; gap: 0.75rem;
+  background: var(--green-800); color: var(--cream);
+  padding: 0.95rem 1.4rem;
+  border-radius: 10px;
+  border: 1px solid rgba(184,151,58,0.35);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.95rem; font-weight: 500;
+  letter-spacing: 0.01em;
+  z-index: 1000;
+  opacity: 0; pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.2,0.9,0.3,1.4), opacity 0.3s;
+  max-width: calc(100vw - 2rem);
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+.toast.error { background: #5e2424; border-color: rgba(255,180,180,0.3); }
+.toast .toast-check { width: 18px; height: 18px; color: var(--gold-light); flex-shrink: 0; }
+.toast.error .toast-check { color: #ffb3b3; }
+
 /* ═══ SCREENSHOTS ═══ */
 .screenshots { background: var(--white); }
 .screenshot-tabs {
@@ -801,7 +824,7 @@ footer a:hover { color: rgba(248,245,239,0.6); }
     <h2>Ready to automate your caddie program?</h2>
     <p>Leave your info and we'll set up a personalized demo for your club.</p>
     <div class="form-wrap">
-      <form action="https://formspree.io/f/mykdjawv" method="POST" class="demo-form">
+      <form action="https://formspree.io/f/mykdjawv" method="POST" class="demo-form" id="demo-form">
         <div class="form-row">
           <input type="text" name="name" placeholder="Your Name" required>
           <input type="email" name="email" placeholder="Email Address" required>
@@ -838,6 +861,12 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   <p style="margin-top:0.5rem;"><a href="mailto:looplegendco@gmail.com" class="footer-links">looplegendco@gmail.com</a></p>
   <p style="margin-top:1.25rem;opacity:0.6;font-size:0.85rem;">© 2026 LoopLegend. All rights reserved.</p>
 </footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg class="toast-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+  <span id="toast-msg"></span>
+</div>
 
 <!-- SCRIPTS -->
 <script>
@@ -880,6 +909,46 @@ function showTab(tab, el) {
   document.querySelectorAll('.screenshot-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
   el.classList.add('active');
+}
+
+// Demo form: AJAX submit, toast, reset — no redirect
+const demoForm = document.getElementById('demo-form');
+const toast = document.getElementById('toast');
+const toastMsg = document.getElementById('toast-msg');
+let toastTimer;
+function showToast(msg, isError) {
+  toastMsg.textContent = msg;
+  toast.classList.toggle('error', !!isError);
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 4500);
+}
+if (demoForm) {
+  demoForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = demoForm.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const res = await fetch(demoForm.action, {
+        method: 'POST',
+        body: new FormData(demoForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        showToast('Thanks — your demo request was received. We\'ll be in touch shortly.');
+        demoForm.reset();
+      } else {
+        showToast('Something went wrong. Please email demo@looplegendapp.com directly.', true);
+      }
+    } catch (err) {
+      showToast('Network error. Please email demo@looplegendapp.com directly.', true);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
 }
 </script>
 
