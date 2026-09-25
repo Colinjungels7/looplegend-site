@@ -611,53 +611,18 @@ footer a:hover { color: rgba(248,245,239,0.6); }
   color: var(--green-700);
   border-bottom-color: var(--green-700);
 }
-.screenshot-frame {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.5rem;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-.screenshot-frame img {
-  width: 100%; height: auto; border-radius: 8px;
-  display: block;
-}
 .screenshot-panel { display: none; }
 .screenshot-panel.active { display: block; }
 .screenshot-caption {
-  text-align: center; margin-top: 3rem;
+  text-align: center; margin-top: 1.5rem;
   font-size: 0.9rem; color: var(--text-light);
 }
 
-/* Desktop shot with the phone view overlapping its bottom-right corner */
-.shot-stage { position: relative; }
-.phone-frame {
-  position: absolute;
-  right: -0.75rem; bottom: -1.75rem;
-  width: 17%; min-width: 120px; max-width: 200px;
-  background: #15150f;
-  border-radius: 22px;
-  padding: 6px;
-  box-shadow: 0 16px 44px rgba(0,0,0,0.28);
-}
-.phone-frame img {
+/* Laptop + phone product shot */
+.showcase {
   width: 100%; height: auto; display: block;
-  border-radius: 17px;
-}
-
-@media (max-width: 768px) {
-  /* Phone widths: phone view only, centred */
-  .shot-stage .screenshot-frame { display: none; }
-  .shot-stage .phone-frame {
-    position: static;
-    width: 100%; min-width: 0; max-width: 270px;
-    margin: 0 auto;
-    border-radius: 28px;
-    padding: 7px;
-  }
-  .phone-frame img { border-radius: 22px; }
-  .screenshot-caption { margin-top: 1.5rem; }
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.10);
 }
 .reveal {
   opacity: 0; transform: translateY(25px);
@@ -792,36 +757,15 @@ footer a:hover { color: rgba(248,245,239,0.6); }
       <button class="screenshot-tab" onclick="showTab('member', this)">Member</button>
     </div>
     <div class="screenshot-panel active" id="panel-admin">
-      <div class="shot-stage reveal">
-        <div class="screenshot-frame">
-          <img src="assets/screenshot-admin.png" alt="LoopLegend admin tee sheet view" width="2205" height="1203" loading="lazy" decoding="async">
-        </div>
-        <div class="phone-frame">
-          <img src="assets/screenshot-admin-phone.png" alt="LoopLegend admin tee sheet view on a phone" width="860" height="1864" loading="lazy" decoding="async">
-        </div>
-      </div>
+      <img class="showcase reveal" src="assets/showcase-admin.webp" alt="LoopLegend admin tee sheet on a laptop and a phone" width="1536" height="1024" loading="lazy" decoding="async">
       <p class="screenshot-caption">The caddie master sees the full tee sheet with every assignment, guest tag, and caddie at a glance.</p>
     </div>
     <div class="screenshot-panel" id="panel-caddie">
-      <div class="shot-stage reveal">
-        <div class="screenshot-frame">
-          <img src="assets/screenshot-caddie.png" alt="LoopLegend caddie dashboard" width="2205" height="1203" loading="lazy" decoding="async">
-        </div>
-        <div class="phone-frame">
-          <img src="assets/screenshot-caddie-phone.png" alt="LoopLegend caddie dashboard on a phone" width="860" height="1864" loading="lazy" decoding="async">
-        </div>
-      </div>
+      <img class="showcase reveal" src="assets/showcase-caddie.webp" alt="LoopLegend caddie dashboard on a laptop and a phone" width="1536" height="1024" loading="lazy" decoding="async">
       <p class="screenshot-caption">Caddies see their pending and confirmed loops with full group details. Accept or decline with one tap.</p>
     </div>
     <div class="screenshot-panel" id="panel-member">
-      <div class="shot-stage reveal">
-        <div class="screenshot-frame">
-          <img src="assets/screenshot-member.png" alt="LoopLegend member view" width="2205" height="1203" loading="lazy" decoding="async">
-        </div>
-        <div class="phone-frame">
-          <img src="assets/screenshot-member-phone.png" alt="LoopLegend member view on a phone" width="860" height="1864" loading="lazy" decoding="async">
-        </div>
-      </div>
+      <img class="showcase reveal" src="assets/showcase-member.webp" alt="LoopLegend member view on a laptop and a phone" width="1536" height="1024" loading="lazy" decoding="async">
       <p class="screenshot-caption">Members see their upcoming tee times, assigned caddie, and can request or replace caddies directly.</p>
     </div>
   </div>
@@ -1002,6 +946,12 @@ function showTab(tab, el) {
   document.querySelectorAll('.screenshot-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
   el.classList.add('active');
+  // Hidden panels keep their lazy image deferred, so kick the load on reveal
+  const img = document.querySelector('#panel-' + tab + ' .showcase');
+  if (img) {
+    if (!img.complete) img.loading = 'eager';
+    img.classList.add('visible');
+  }
 }
 
 // Demo form: AJAX submit, toast, reset — no redirect
